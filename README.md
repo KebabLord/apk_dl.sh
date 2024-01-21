@@ -18,14 +18,15 @@ telegram.apk                   100%[==================================>]  70.64M
 Do you want to install the apk? (y/n): n
 ```
 ## Usage
-Make sure to install dependencies:
-```
+if on termux, make sure to give it "install unknown apps" permission if you don't have root.
+```bash
+# Install dependencies
 pkg install wget curl
-```
-Don't forget to uncomment one of the final lines at the script to enable the apk installing method.
-```
-# su -c pm install "$query.apk" # If device is rooted, doesn't ask for confirmation. 
-# termux-open "$query.apk"      # If device is not rooted.
+# Download the script
+wget -O apk_dl.sh https://github.com/KebabLord/apk_dl.sh/raw/main/apk_dl.sh
+# Give it execute permission
+chmod +x apk_dl.sh
+# Now you can run it with ./apk_dl.sh "application name"
 ```
 
 ## Why not ApkMirror?
