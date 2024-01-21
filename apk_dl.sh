@@ -99,8 +99,13 @@ echo "OK"
 echo " - Downloading the APK"
 wget -O "$app.apk" -q --show-progress "https://dw.uptodown.com/dwn/$filepath"
 
-# Install it (uncomment one of the below)
-($is_yes || (read -p "Do you want to install the apk? (y/n): " yn && [[ $yn == y ]])) &&
-# su -c pm install "$query.apk" # If device is rooted, doesn't ask for confirmation. 
-# termux-open "$query.apk"      # If device is not rooted.
-exit $?
+# Install the apk.
+if ($is_yes || (read -p "Do you want to install the apk? (y/n): " yn && [[ $yn == y ]])); then
+    if which su &>/dev/null;then
+        su -c pm install "$app.apk" 2>/dev/null && exit 0
+    fi
+    if which termux-open &>/dev/null;then
+        termux-open "$app.apk" && exit 0
+    fi
+    echo "Couldn't install the APK. Make sure that you have \"termux-tools\" installed or you have root."; exit 1
+fi
